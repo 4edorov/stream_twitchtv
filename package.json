@@ -1,4 +1,25 @@
 {
   "name": "stream_twitchtv",
-  "version": "0.0.1"
+  "version": "0.0.1",
+  "description": "<b>Target:</b>  Create app use the Twitchtv JSON API",
+  "main": "index.js",
+  "dependencies": {
+    "vue-resource": "^1.2.0",
+    "vue": "^2.1.10"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/4edorov/stream_twitchtv.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/4edorov/stream_twitchtv/issues"
+  },
+  "homepage": "https://github.com/4edorov/stream_twitchtv#readme"
 }
