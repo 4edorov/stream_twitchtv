@@ -4,8 +4,9 @@
   "description": "<b>Target:</b>  Create app use the Twitchtv JSON API",
   "main": "index.js",
   "dependencies": {
-    "vue-resource": "^1.2.0",
-    "vue": "^2.1.10"
+    "lodash": "^4.17.4",
+    "vue": "^2.1.10",
+    "vue-resource": "^1.2.0"
   },
   "devDependencies": {},
   "scripts": {

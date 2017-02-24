@@ -12,54 +12,26 @@
 </head>
 <body>
 
-  <div class="col-lg-6 col-sm-6">
+  <div class="container">
 
     <div class="card hovercard">
       <div class="card-background">
-        <img class="card-bkimg" alt="" src="http://www.topoboi.com/pic/201310/1024x768/topoboi.com-25596.jpg">
+        <img class="card-bkimg" alt="" src="http://unblocksite2013.appspot.com/s01.shiftdelete.net/img/content/15-12/14/oyun-1450124177.jpg">
       </div>
       <div class="card-info">
-        <span class="card-title">#</span>
+        <span class="card-title">TWITCH STREAMERS</span>
       </div>
     </div>
 
-    <div class="btn-pref btn-group btn-group-justified btn-group-lg" role="group" aria-label="...">
-      <div class="btn-group" role="group">
-        <button type="button" id="all" class="btn btn-primary" href="#" data-toggle="tab">
-          <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-          <div class="hidden-xs">All</div>
-        </button>
-      </div>
-      <div class="btn-group" role="group">
-        <button type="button" id="online" class="btn btn-default" href="#" data-toggle="tab">
-          <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
-          <div class="hidden-xs">online</div>
-        </button>
-        <div class="btn-group" role="group">
-          <button type="button" id="offline" class="btn btn-default" href="#" data-toggle="tab">
-            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-            <div class="hidden-xs">offline</div>
-          </button>
-        </div>
-      </div>
+    <div id="requestResponse">
+      <request-response/>
     </div>
 
-    <div class="well">
-      <div class="tab-content">
-        <div class="tab-pane fade in active" id="all">
-          <h3>#1</h3>
-        </div>
-        <div class="tab-pane fade in" id="online">
-          <h3>#2</h3>
-        </div>
-        <div class="tab-pane fade in" id="offline">
-          <h3>#3</h3>
-        </div>
-      </div>
-    </div>
   </div>
 
-  <script src="/js/main.js"></script>
 
+  <script src="/node_modules/vue/dist/vue.js"></script>
+  <script src="/node_modules/vue-resource/dist/vue-resource.js"></script>
+  <script src="/js/main.js"></script>
 </body>
 </html>
