@@ -21,8 +21,8 @@
 
 .card-background img {
     filter: blur(8px);
-    margin-left: -160px;
-    margin-top: -400px;
+    margin-left: -140px;
+    margin-top: -200px;
     min-width: 130%;
 }
 
@@ -37,7 +37,7 @@
     padding: 0 5px;
     font-size: 40px;
     line-height: 1;
-    color: lightsteelblue;
+    color: darkblue;
     background-color: rgba(255, 255, 255, 0.1);
     border-radius: 4px;
 }

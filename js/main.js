@@ -35,7 +35,7 @@ Vue.component('request-response', {
           placeHolder="Add a user"
         >
         <ul class="list-group" v-if="listUsersStream.length">
-          <li v-for="(user, index) in listUsersStream">
+          <li class="list-group-item" v-for="(user, index) in listUsersStream">
             {{ user }}
             <button class="btn btn-danger btn-xs" v-on:click="listUsersStream.splice(index, 1)"><span class="glyphicon glyphicon-remove-circle"></span></button>
           </li>
@@ -44,7 +44,11 @@ Vue.component('request-response', {
       </div>
       
       <div class="well" v-if="reqStream">
-        #2
+        <ul class="list-group" v-if="allStream.length">
+          <li class="list-group-item" v-for="streamer in allStream">
+            {{ streamer }}
+          </li>
+        </ul>   
       </div>  
     </div>
   `,
@@ -54,7 +58,7 @@ Vue.component('request-response', {
       reqStream: 0,
       listUsersStream: ["ESL_SC2", "OgamingSC2", "cretetion", "freecodecamp", "storbeck", "habathcx", "RobotCaleb", "noobs2ninjas"],
       newUser: '',
-      allStream: ''
+      allStream: []
     }
   },
   methods: {
@@ -76,19 +80,23 @@ Vue.component('request-response', {
       if (this.reqStream > 1) {
         this.reqStream = 0;
       }
-      function getStream(userName) {
-        console.log('https://wind-bow.gomix.me/twitch-api/streams/' + userName);
-        $http.get('https://wind-bow.gomix.me/twitch-api/streams/' + userName)
-          .then(response => {
-            allStream = response.body;
-            console.log(allStream);
-          }, response => {
-            console.log(response);
-          });
-      }
       if (this.reqStream) {
-        this.listUsersStream.forEach(getStream);
+        this.allStream = [];
+        this.listUsersStream.forEach(this.getStream);
       }
+      console.log(this.allStream);
+    },
+    getStream(userName) {
+      /*console.log('https://wind-bow.gomix.me/twitch-api/streams/' + userName);*/
+      this.$http.get('https://wind-bow.gomix.me/twitch-api/streams/' + userName)
+        .then(response => {
+          if (response.ok)
+          this.allStream.push(response.body);
+
+        }, response => {
+          window.alert("Unable to load data. Error: " + response.status + " " + response.statusText);
+          /*console.log(response);*/
+        });
     }
   }
 });
