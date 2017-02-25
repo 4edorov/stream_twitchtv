@@ -21,8 +21,8 @@
 
 .card-background img {
     filter: blur(8px);
-    margin-left: -100px;
-    margin-top: -200px;
+    margin-left: -160px;
+    margin-top: -400px;
     min-width: 130%;
 }
 

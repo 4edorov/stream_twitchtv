@@ -29,41 +29,66 @@ Vue.component('request-response', {
       </div>
   
       <div class="well" v-if="listStream">
-        <input
+        <input class="addNewUser"
           v-model="newUser"
-          v-on:leyup.enter="addNewUser"
+          v-on:keyup.enter="addNewUser()"
           placeHolder="Add a user"
         >
         <ul class="list-group" v-if="listUsersStream.length">
-          <li v-for="user in listUsersStream">{{ user }}</li>
+          <li v-for="(user, index) in listUsersStream">
+            {{ user }}
+            <button class="btn btn-danger btn-xs" v-on:click="listUsersStream.splice(index, 1)"><span class="glyphicon glyphicon-remove-circle"></span></button>
+          </li>
         </ul>
         <p v-else>No users found</p>
       </div>
-        
+      
+      <div class="well" v-if="reqStream">
+        #2
+      </div>  
     </div>
   `,
   data: function () {
     return {
       listStream: 0,
+      reqStream: 0,
       listUsersStream: ["ESL_SC2", "OgamingSC2", "cretetion", "freecodecamp", "storbeck", "habathcx", "RobotCaleb", "noobs2ninjas"],
-      allStream: null
+      newUser: '',
+      allStream: ''
     }
   },
   methods: {
     showListOfStream() {
+      this.reqStream = 0;
       this.listStream++;
       if (this.listStream > 1) {
         this.listStream = 0;
       }
     },
+    addNewUser() {
+      this.listUsersStream.push(this.newUser);
+      this.newUser = '';
+      console.log(this.listUsersStream)
+    },
     reqAllStream() {
-      this.$http.get('https://wind-bow.gomix.me/twitch-api/streams/freecodecamp/')
-        .then(response => {
-          this.allStream = response.body;
-          console.log(this.allStream);
-        }, response => {
-          console.log(response);
-      });
+      this.listStream = 0;
+      this.reqStream++;
+      if (this.reqStream > 1) {
+        this.reqStream = 0;
+      }
+      function getStream(userName) {
+        console.log('https://wind-bow.gomix.me/twitch-api/streams/' + userName);
+        $http.get('https://wind-bow.gomix.me/twitch-api/streams/' + userName)
+          .then(response => {
+            allStream = response.body;
+            console.log(allStream);
+          }, response => {
+            console.log(response);
+          });
+      }
+      if (this.reqStream) {
+        this.listUsersStream.forEach(getStream);
+      }
     }
   }
 });
