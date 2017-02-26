@@ -44,9 +44,14 @@ Vue.component('request-response', {
       </div>
       
       <div class="well" v-if="reqStream">
-        <ul class="list-group" v-if="allStream.length">
-          <li class="list-group-item" v-for="streamer in allStream">
-            {{ streamer }}
+        <ul class="list-group">
+          <li class="list-group-item" v-for="user in allChannels">
+            {{ user }}
+          <!--  <div class="row">
+              <div class="col-xs-4"><img v-bind:src="allChannels.user.logo"></div>            
+              <div class="col-xs-4"><a target="_blank" v-bind:href="user.url">{{ user}}</a></div>
+              <div class="col-xs-4"><span>{{ user.game }}: </span><span>{{ user.status }}</span></div>
+            </div> -->
           </li>
         </ul>   
       </div>  
@@ -56,9 +61,10 @@ Vue.component('request-response', {
     return {
       listStream: 0,
       reqStream: 0,
-      listUsersStream: ["ESL_SC2", "OgamingSC2", "cretetion", "freecodecamp", "storbeck", "habathcx", "RobotCaleb", "noobs2ninjas"],
+      listUsersStream: ["ESL_SC2", "OgamingSC2", "cretetion", "freecodecamp", "storbeck", "habathcx", "RobotCaleb", "noobs2ninjas", "brunofin", "comster404"],
       newUser: '',
-      allStream: []
+      allChannels: {},
+      allStreams: {}
     }
   },
   methods: {
@@ -81,22 +87,29 @@ Vue.component('request-response', {
         this.reqStream = 0;
       }
       if (this.reqStream) {
-        this.allStream = [];
         this.listUsersStream.forEach(this.getStream);
+        console.log(this.allChannels);
       }
-      console.log(this.allStream);
+
     },
     getStream(userName) {
       /*console.log('https://wind-bow.gomix.me/twitch-api/streams/' + userName);*/
-      this.$http.get('https://wind-bow.gomix.me/twitch-api/streams/' + userName)
+      this.$http.get('https://wind-bow.gomix.me/twitch-api/channels/' + userName)
         .then(response => {
-          if (response.ok)
-          this.allStream.push(response.body);
-
+          if (response.ok) {
+            this.allChannels[userName] = response.body;
+          }
         }, response => {
-          window.alert("Unable to load data. Error: " + response.status + " " + response.statusText);
-          /*console.log(response);*/
+          window.alert("Unable to load data from channels. Error: " + response.status + " " + response.statusText);
         });
+      /*this.$http.get('https://wind-bow.gomix.me/twitch-api/streams/' + userName)
+        .then(response => {
+          if (response.ok) {
+            this.allStream.name.streams = response.body;
+          }
+        }, response => {
+          window.alert("Unable to load data from streams. Error: " + response.status + " " + response.statusText);
+        });*/
     }
   }
 });
