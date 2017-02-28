@@ -87,12 +87,6 @@ Vue.component('request-response', {
       }
       this.showChannels();
     },
-      /*let self = this;
-      this.loopUser().then(function() {
-        self.showChannels();
-        console.log(self.allChannels, Object.keys(self.allChannels).length);
-      })
-    },*/
     showChannels() {
       this.listUsers = 0;
       this.listChannels++;
@@ -100,18 +94,6 @@ Vue.component('request-response', {
         this.listChannels = 0;
       }
     },
-    /*loopUser() {
-      return Promise.all(
-        chain = $q.when();
-        for (var i = 0; i < this.listUsersStream.length; i++) {
-          chain = chain.then(function () {
-            return self.getStream(self.listUsersStream[i]);
-          });
-        }
-      )
-    },
-        this.listUsersStream.map(this.getStream));*/
-
     loopUser() {
       this.allChannels = [];
       this.listUsersStream.forEach(this.getStream);
@@ -120,11 +102,6 @@ Vue.component('request-response', {
       this.$http.get('https://wind-bow.gomix.me/twitch-api/channels/' + userName)
         .then(response => {
           if (response.ok) {
-            /*this.allChannels[userName] = response.body;*/
-            /*Object.defineProperty(this.allChannels, [userName], {
-              value: response.body,
-              enumerable: true
-            });*/
             this.allChannels.push(response.body);
             console.log(this.allChannels, this.allChannels.length);
           }
