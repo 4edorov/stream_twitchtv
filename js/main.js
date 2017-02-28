@@ -9,7 +9,7 @@ Vue.component('request-response', {
           </button>  
         </div>
         <div class="btn-group" role="group">
-          <button type="button" class="btn btn-default" v-on:click="reqAllStream()">
+          <button type="button" class="btn btn-default" v-on:click="reqChannels()">
             <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
             <div class="hidden-xs">all</div>
           </button>
@@ -28,7 +28,7 @@ Vue.component('request-response', {
         </div>
       </div>
   
-      <div class="well" v-if="listStream">
+      <div class="well" v-if="listUsers">
         <input class="addNewUser"
           v-model="newUser"
           v-on:keyup.enter="addNewUser()"
@@ -43,8 +43,8 @@ Vue.component('request-response', {
         <p v-else>No users found</p>
       </div>
       
-      <div class="well" v-if="reqStream">
-        <ul class="list-group">
+      <div class="well" v-if="listChannels">
+        <ul class="list-group" v-if="Object.keys(this.allChannels).length">
           <li class="list-group-item" v-for="user in allChannels">
             {{ user }}
           <!--  <div class="row">
@@ -59,8 +59,8 @@ Vue.component('request-response', {
   `,
   data: function () {
     return {
-      listStream: 0,
-      reqStream: 0,
+      listUsers: 0,
+      listChannels: 0,
       listUsersStream: ["ESL_SC2", "OgamingSC2", "cretetion", "freecodecamp", "storbeck", "habathcx", "RobotCaleb", "noobs2ninjas", "brunofin", "comster404"],
       newUser: '',
       allChannels: {},
@@ -69,10 +69,10 @@ Vue.component('request-response', {
   },
   methods: {
     showListOfStream() {
-      this.reqStream = 0;
-      this.listStream++;
-      if (this.listStream > 1) {
-        this.listStream = 0;
+      this.listChannels = 0;
+      this.listUsers++;
+      if (this.listUsers > 1) {
+        this.listUsers = 0;
       }
     },
     addNewUser() {
@@ -80,36 +80,40 @@ Vue.component('request-response', {
       this.newUser = '';
       console.log(this.listUsersStream)
     },
-    reqAllStream() {
-      this.listStream = 0;
-      this.reqStream++;
-      if (this.reqStream > 1) {
-        this.reqStream = 0;
-      }
-      if (this.reqStream) {
-        this.listUsersStream.forEach(this.getStream);
-        console.log(this.allChannels);
-      }
 
+    reqChannels() {
+      this.loopUser();
+      setTimeout(this.showChannels, 1000);
+      console.log(this.allChannels, Object.keys(this.allChannels).length);
+    },
+    showChannels() {
+      this.listUsers = 0;
+      this.listChannels++;
+      if (this.listChannels > 1) {
+        this.listChannels = 0;
+      }
+    },
+    loopUser() {
+      this.listUsersStream.forEach(this.getStream);
     },
     getStream(userName) {
-      /*console.log('https://wind-bow.gomix.me/twitch-api/streams/' + userName);*/
       this.$http.get('https://wind-bow.gomix.me/twitch-api/channels/' + userName)
         .then(response => {
           if (response.ok) {
             this.allChannels[userName] = response.body;
+            console.log(this.allChannels, Object.keys(this.allChannels).length);
           }
         }, response => {
           window.alert("Unable to load data from channels. Error: " + response.status + " " + response.statusText);
         });
       /*this.$http.get('https://wind-bow.gomix.me/twitch-api/streams/' + userName)
-        .then(response => {
-          if (response.ok) {
-            this.allStream.name.streams = response.body;
-          }
-        }, response => {
-          window.alert("Unable to load data from streams. Error: " + response.status + " " + response.statusText);
-        });*/
+       .then(response => {
+       if (response.ok) {
+       this.allStream.name.streams = response.body;
+       }
+       }, response => {
+       window.alert("Unable to load data from streams. Error: " + response.status + " " + response.statusText);
+       });*/
     }
   }
 });
