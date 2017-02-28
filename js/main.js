@@ -44,7 +44,7 @@ Vue.component('request-response', {
       </div>
       
       <div class="well" v-if="listChannels">
-        <ul class="list-group" v-if="Object.keys(this.allChannels).length">
+        <ul class="list-group" v-if="this.allChannels.length">
           <li class="list-group-item" v-for="user in allChannels">
             {{ user }}
           <!--  <div class="row">
@@ -63,7 +63,7 @@ Vue.component('request-response', {
       listChannels: 0,
       listUsersStream: ["ESL_SC2", "OgamingSC2", "cretetion", "freecodecamp", "storbeck", "habathcx", "RobotCaleb", "noobs2ninjas", "brunofin", "comster404"],
       newUser: '',
-      allChannels: {},
+      allChannels: [],
       allStreams: {}
     }
   },
@@ -82,10 +82,17 @@ Vue.component('request-response', {
     },
 
     reqChannels() {
-      this.loopUser();
-      setTimeout(this.showChannels, 1000);
-      console.log(this.allChannels, Object.keys(this.allChannels).length);
+      if (this.listChannels === 0) {
+        this.loopUser();
+      }
+      this.showChannels();
     },
+      /*let self = this;
+      this.loopUser().then(function() {
+        self.showChannels();
+        console.log(self.allChannels, Object.keys(self.allChannels).length);
+      })
+    },*/
     showChannels() {
       this.listUsers = 0;
       this.listChannels++;
@@ -93,15 +100,33 @@ Vue.component('request-response', {
         this.listChannels = 0;
       }
     },
+    /*loopUser() {
+      return Promise.all(
+        chain = $q.when();
+        for (var i = 0; i < this.listUsersStream.length; i++) {
+          chain = chain.then(function () {
+            return self.getStream(self.listUsersStream[i]);
+          });
+        }
+      )
+    },
+        this.listUsersStream.map(this.getStream));*/
+
     loopUser() {
+      this.allChannels = [];
       this.listUsersStream.forEach(this.getStream);
     },
     getStream(userName) {
       this.$http.get('https://wind-bow.gomix.me/twitch-api/channels/' + userName)
         .then(response => {
           if (response.ok) {
-            this.allChannels[userName] = response.body;
-            console.log(this.allChannels, Object.keys(this.allChannels).length);
+            /*this.allChannels[userName] = response.body;*/
+            /*Object.defineProperty(this.allChannels, [userName], {
+              value: response.body,
+              enumerable: true
+            });*/
+            this.allChannels.push(response.body);
+            console.log(this.allChannels, this.allChannels.length);
           }
         }, response => {
           window.alert("Unable to load data from channels. Error: " + response.status + " " + response.statusText);
