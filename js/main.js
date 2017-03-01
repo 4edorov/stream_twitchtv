@@ -86,7 +86,7 @@ Vue.component('request-response', {
         this.loopUser();
       }
       this.showChannels();
-      console.log(this.allChannels, this.allChannels.length);
+      console.log(this.allChannels, Object.keys(this.allChannels).length);
     },
     showChannels() {
       this.listUsers = 0;
@@ -103,8 +103,8 @@ Vue.component('request-response', {
       this.$http.get('https://wind-bow.gomix.me/twitch-api/channels/' + userName)
         .then(response => {
           if (response.ok) {
-            this.allChannels.push(response.body);
-            console.log(this.allChannels, this.allChannels.length);
+            this.allChannels[userName] = response.body;
+            console.log(this.allChannels, Object.keys(this.allChannels).length);
           }
         }, response => {
           window.alert("Unable to load data from channels. Error: " + response.status + " " + response.statusText);
