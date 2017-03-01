@@ -86,6 +86,7 @@ Vue.component('request-response', {
         this.loopUser();
       }
       this.showChannels();
+      console.log(this.allChannels, this.allChannels.length);
     },
     showChannels() {
       this.listUsers = 0;
