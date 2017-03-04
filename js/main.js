@@ -87,8 +87,7 @@ Vue.component('request-response', {
       if (this.listChannels === 0) {
         this.loopUser();
       }
-      setTimeout(this.showChannels, 1000);
-      console.log(this.allChannels, Object.keys(this.allChannels).length);
+      this.showChannels();
     },
     showChannels() {
       this.listUsers = 0;
@@ -106,8 +105,10 @@ Vue.component('request-response', {
       this.$http.get('https://wind-bow.gomix.me/twitch-api/channels/' + userName)
         .then(response => {
           if (response.ok) {
-            this.allChannels[userName] = response.body;
-            console.log(this.allChannels, Object.keys(this.allChannels).length);
+            this.allChannels = {
+              ...this.allChannels,
+              [userName]: {...this.allChannels[userName], channels: response.body}
+            };
           }
         }, response => {
           window.alert("Unable to load data from channels. Error: " + response.status + " " + response.statusText);
@@ -115,10 +116,13 @@ Vue.component('request-response', {
       this.$http.get('https://wind-bow.gomix.me/twitch-api/streams/' + userName)
         .then(response => {
           if (response.ok) {
-          this.allStreams[userName] = response.body;
-        }
-      }, response => {
-        window.alert("Unable to load data from streams. Error: " + response.status + " " + response.statusText);
+            this.allChannels = {
+              ...this.allChannels,
+              [userName]: {...this.allChannels[userName], streams: response.body}
+            };
+          }
+        }, response => {
+          window.alert("Unable to load data from streams. Error: " + response.status + " " + response.statusText);
         });
     }
   }
