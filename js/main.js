@@ -36,8 +36,8 @@ Vue.component('request-response', {
         >
         <ul class="list-group" v-if="listUsersStream.length">
           <li class="list-group-item" v-for="(user, index) in listUsersStream">
-            {{ user }}
             <button class="btn btn-danger btn-xs" v-on:click="listUsersStream.splice(index, 1)"><span class="glyphicon glyphicon-remove-circle"></span></button>
+            {{ user }}
           </li>
         </ul>
         <p v-else>No users found</p>
@@ -47,15 +47,18 @@ Vue.component('request-response', {
         <ul class="list-group">
           <li class="list-group-item text-center" v-for="(user, key) in allChannels">
             <div class="row">
-              <div class="col-sm-4">
-                <img v-if="user.channels.error" class="img-circle logo-user" src="http://img.androiduu.com/1339/983339_screen0.jpg">
+              <div class="col-sm-4 col-xs-3">
+                <img v-if="user.channels.error" class="img-responsive img-circle logo-user" src="http://img.androiduu.com/1339/983339_screen0.jpg">
                 <img v-else class="img-responsive img-circle logo-user" v-bind:src="user.channels.logo">
               </div>            
-              <div class="col-sm-4">
-                <a target="_blank" v-bind:href="user.channels.url">{{ key }}</a>
+              <div class="col-sm-4 col-xs-4">
+                <a v-if="user.streams.stream" target="_blank" v-bind:href="user.channels.url" class="btn btn-success" role="button">{{ key }}</a>
+                <a v-else-if="user.channels.error" target="_blank" v-bind:href="user.channels.url" class="btn btn-default disabled" role="button">{{ key }}</a>
+                <a v-else target="_blank" v-bind:href="user.channels.url" class="btn btn-danger" role="button">{{ key }}</a>
               </div>
-              <div class="col-sm-4">
+              <div class="col-sm-4 col-xs-5">
                 <span v-if="user.streams.stream">{{ user.channels.game }}: <span>{{ user.channels.status }}</span></span>
+                <span v-else-if="user.channels.error">Not found</span>
                 <span v-else>Offline</span>
               </div>
             </div>
@@ -67,11 +70,11 @@ Vue.component('request-response', {
         <ul class="list-group">
           <li class="list-group-item text-center" v-for="(user, key) in allChannels" v-if="user.streams.stream">
             <div class="row">
-              <div class="col-sm-4"><img class="img-responsive img-circle logo-user" v-bind:src="user.channels.logo"></div>            
-              <div class="col-sm-4">
-                <a target="_blank" v-bind:href="user.channels.url">{{ key }}</a>
+              <div class="col-sm-4 col-xs-3"><img class="img-responsive img-circle logo-user" v-bind:src="user.channels.logo"></div>            
+              <div class="col-sm-4 col-xs-4">
+                <a target="_blank" v-bind:href="user.channels.url" class="btn btn-success" role="button">{{ key }}</a>
               </div>
-              <div class="col-sm-4">
+              <div class="col-sm-4 col-xs-5">
                 <span>{{ user.channels.game }}: <span>{{ user.channels.status }}</span></span>
               </div>
             </div>
@@ -83,11 +86,11 @@ Vue.component('request-response', {
         <ul class="list-group">
           <li class="list-group-item text-center" v-for="(user, key) in allChannels" v-if="!user.streams.stream & !user.channels.error">
             <div class="row">
-              <div class="col-sm-4"><img class="img-responsive img-circle logo-user" v-bind:src="user.channels.logo"></div>            
-              <div class="col-sm-4">
-                <a target="_blank" v-bind:href="user.channels.url">{{ key }}</a>
+              <div class="col-sm-4 col-xs-3"><img class="img-responsive img-circle logo-user" v-bind:src="user.channels.logo"></div>            
+              <div class="col-sm-4 col-xs-4">
+                <a target="_blank" v-bind:href="user.channels.url" class="btn btn-danger" role="button">{{ key }}</a>
               </div>
-              <div class="col-sm-4">
+              <div class="col-sm-4 col-xs-5">
                 <span>Offline</span>
               </div>
             </div>
