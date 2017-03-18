@@ -168,7 +168,7 @@ Vue.component('request-response', {
       this.listUsersStream.map(this.getStream);
     },
     getStream(userName) {
-      this.$http.get('https://wind-bow.gomix.me/twitch-api/channels/' + userName)
+      this.$http.get('https://wind-bow.glitch.me/twitch-api/channels/' + userName)
         .then(response => {
           if (response.ok) {
             this.allChannels = Object.assign({}, this.allChannels, {
@@ -178,7 +178,7 @@ Vue.component('request-response', {
         }, response => {
           window.alert("Unable to load data from channels. Error: " + response.status + " " + response.statusText);
         });
-      this.$http.get('https://wind-bow.gomix.me/twitch-api/streams/' + userName)
+      this.$http.get('https://wind-bow.glitch.me/twitch-api/streams/' + userName)
         .then(response => {
           if (response.ok) {
             this.allChannels = Object.assign({}, this.allChannels, {
