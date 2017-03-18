@@ -24,4 +24,8 @@ TODO list:
 
     - vue;
     - vue-resource;
+   
+6. To start serve:
+
+    `live-server`
 
