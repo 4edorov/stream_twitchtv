@@ -25,7 +25,12 @@ TODO list:
     - vue;
     - vue-resource;
    
-6. To start serve:
+6. To start local server:
 
-    `live-server`
+    - in command line `live-server`.
+    
+**Description of end-project:**
 
+Use the Twitch JSON API. Allows edit list of users, show streaming channels on Twitch.tv, show offline and don't exist accounts.
+
+Review on https://codepen.io/4edorov/pen/WpxzaJ
